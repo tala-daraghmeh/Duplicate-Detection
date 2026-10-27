@@ -1,0 +1,13 @@
+# Compiled C++ files
+*.exe
+*.obj
+*.ilk
+*.pdb
+*.o
+
+# VS Code settings
+.vscode/
+
+# Temporary files
+*.tmp
+*.log

@@ -36,9 +36,47 @@ num++;
 
 }
 int main(){
+   int test1[] = {4, 1, 3, 2, 5}; 
+   bool bruteResult1 = hasDuplicateBruteForce(test1, 5);
+   bool sortResult1 = hasDuplicateSortScan(test1, 5);
+   if (bruteResult1 == false && sortResult1 == false) {
+    cout << "Test 1: PASS" << endl;
+}
+else {
+    cout << "Test 1: FAIL" << endl;
+}
+int test2[] = {7, 7, 1, 2, 3};
+   bool bruteResult2 = hasDuplicateBruteForce(test2, 5);
+   bool sortResult2 = hasDuplicateSortScan(test2, 5);
+   if (bruteResult2 == true && sortResult2 == true) {
+    cout << "Test 2: PASS" << endl;
+   }
+   else {
+    cout << "Test 2: FAIL" << endl;
+   }
+   int test3[] = {1, 2, 3, 9, 9};
+    bool bruteResult3 = hasDuplicateBruteForce(test3, 5);
+    bool sortResult3 = hasDuplicateSortScan(test3, 5);
+    if (bruteResult3 == true && sortResult3 == true) {
+    cout << "Test 3: PASS" << endl;
+    }
+    else {
+    cout << "Test 3: FAIL" << endl;
+    }
+    int test4[] = {5, 5, 5, 5, 5};
+    bool bruteResult4 = hasDuplicateBruteForce(test4, 5);
+    bool sortResult4 = hasDuplicateSortScan(test4, 5);
+    if (bruteResult4 == true && sortResult4 == true) {
+    cout << "Test 4: PASS" << endl;
+    }
+    else {
+    cout << "Test 4: FAIL" << endl;
+    }
 
-  int sizes[]={4000, 8000, 16000, 32000};
-  for(int i=0;i<4;i++)
+  int sizes[] = {4000, 8000, 16000, 32000, 64000};
+  double bruteTimes[5];
+double sortTimes[5];
+  for(int i=0;i<5;i++)
 {
  cout<<"----------------------------------------"<<endl;
 int size=sizes[i];
@@ -52,7 +90,7 @@ double average_time_sort_scan=0;
     cout << "\nTrial " << j + 1 << endl;
 
 int * arr=new int[size];  
-makearray(arr,size,75);//make an array of size n with random numbers
+makearray(arr,size,j+1);//make an array of size n with random numbers
 auto start_1=chrono::high_resolution_clock::now();//start time
 bool resulte1 = hasDuplicateBruteForce(arr, size);
 auto end_1 = chrono::high_resolution_clock::now();//end time
@@ -69,10 +107,21 @@ cout<<"Brute Force Result: "<<boolalpha<<resulte1<<endl;
 cout<<"Sort and Scan Result: "<<boolalpha<<resulte2<<endl;
     delete[] arr;
     }
-     average_time_brute_force=total_time_brute_force/5.0;
- average_time_sort_scan=total_time_sort_scan/5.0;
-  cout<<"Average time taken by hasDuplicateBruteForce: "<<average_time_brute_force<<" ns"<<endl;
- cout<<"Average time taken by hasDuplicateSortScan: "<<average_time_sort_scan<<" ns"<<endl;
+average_time_brute_force = total_time_brute_force / 5.0 / 1000000.0;
+ average_time_sort_scan=total_time_sort_scan/5.0/1000000.0;
+  cout<<"Average time taken by hasDuplicateBruteForce: "<<average_time_brute_force<<" ms"<<endl;
+ cout<<"Average time taken by hasDuplicateSortScan: "<<average_time_sort_scan<<" ms"<<endl;
+ double speedup = average_time_brute_force / average_time_sort_scan;
+ cout<<"Speedup: "<<speedup<<endl;
+ bruteTimes[i] = average_time_brute_force;
+ sortTimes[i] = average_time_sort_scan;
+}
+for (int i = 1; i < 5; i++) {
+    double bruteGrowth = bruteTimes[i] / bruteTimes[i - 1];
+    double sortGrowth = sortTimes[i] / sortTimes[i - 1];
+    cout << "From n = " << sizes[i - 1] << " to n = " << sizes[i] << endl;
+    cout << "  hasDuplicateBruteForce growth: " << bruteGrowth << endl;
+    cout << "  hasDuplicateSortScan growth: " << sortGrowth << endl;
 }
 }
 
